@@ -493,35 +493,38 @@ def get_signal_level(advice: Any, score: Any, language: Optional[str]) -> tuple[
     """Return localized signal text, emoji, and stable color tag."""
     normalized_language = normalize_report_language(language)
     canonical = _canonicalize_lookup_value(advice, _OPERATION_ADVICE_CANONICAL_MAP)
+    # 中国A股颜色标准：涨=🔴红，跌=🟢绿
     if canonical == "strong_buy":
-        return (_OPERATION_ADVICE_TRANSLATIONS["strong_buy"][normalized_language], "💚", "strong_buy")
+        return (_OPERATION_ADVICE_TRANSLATIONS["strong_buy"][normalized_language], "🔴", "strong_buy")
     if canonical == "buy":
-        return (_OPERATION_ADVICE_TRANSLATIONS["buy"][normalized_language], "🟢", "buy")
+        return (_OPERATION_ADVICE_TRANSLATIONS["buy"][normalized_language], "🔴", "buy")
     if canonical == "hold":
         return (_OPERATION_ADVICE_TRANSLATIONS["hold"][normalized_language], "🟡", "hold")
     if canonical == "watch":
         return (_OPERATION_ADVICE_TRANSLATIONS["watch"][normalized_language], "⚪", "watch")
     if canonical == "reduce":
-        return (_OPERATION_ADVICE_TRANSLATIONS["reduce"][normalized_language], "🟠", "reduce")
+        return (_OPERATION_ADVICE_TRANSLATIONS["reduce"][normalized_language], "🟢", "reduce")
     if canonical in {"sell", "strong_sell"}:
-        return (_OPERATION_ADVICE_TRANSLATIONS["sell"][normalized_language], "🔴", "sell")
+        return (_OPERATION_ADVICE_TRANSLATIONS["sell"][normalized_language], "🟢", "sell")
 
+    # Fallback: 根据分数判断
     try:
         numeric_score = int(float(score))
     except (TypeError, ValueError):
         numeric_score = 50
 
     if numeric_score >= 80:
-        return (_OPERATION_ADVICE_TRANSLATIONS["strong_buy"][normalized_language], "💚", "strong_buy")
+        return (_OPERATION_ADVICE_TRANSLATIONS["strong_buy"][normalized_language], "🔴", "strong_buy")
     if numeric_score >= 65:
-        return (_OPERATION_ADVICE_TRANSLATIONS["buy"][normalized_language], "🟢", "buy")
+        return (_OPERATION_ADVICE_TRANSLATIONS["buy"][normalized_language], "🔴", "buy")
     if numeric_score >= 55:
         return (_OPERATION_ADVICE_TRANSLATIONS["hold"][normalized_language], "🟡", "hold")
     if numeric_score >= 45:
         return (_OPERATION_ADVICE_TRANSLATIONS["watch"][normalized_language], "⚪", "watch")
     if numeric_score >= 35:
-        return (_OPERATION_ADVICE_TRANSLATIONS["reduce"][normalized_language], "🟠", "reduce")
-    return (_OPERATION_ADVICE_TRANSLATIONS["sell"][normalized_language], "🔴", "sell")
+        return (_OPERATION_ADVICE_TRANSLATIONS["reduce"][normalized_language], "🟢", "reduce")
+    return (_OPERATION_ADVICE_TRANSLATIONS["sell"][normalized_language], "🟢", "sell")
+
 
 
 def get_localized_stock_name(value: Any, code: Any, language: Optional[str]) -> str:
