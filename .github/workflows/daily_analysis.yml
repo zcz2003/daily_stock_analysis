@@ -3,8 +3,8 @@ name: 每日股票分析
 on:
   # 定时触发 - 每天北京时间 18:00 (UTC 10:00)
   schedule:
-  - cron: '0 22 * * 1-5'   # 北京时间 08:00 → 仅大盘复盘
-  - cron: '0 10 * * 1-5'   # 北京时间 18:00 → 仅自选股分析
+  - cron: '15 13 * * 1-5'   # 北京时间 08:00 → 仅大盘复盘
+  - cron: '20 13 * * 1-5'   # 北京时间 18:00 → 仅自选股分析
   
   # 手动触发
   workflow_dispatch:
@@ -354,10 +354,10 @@ jobs:
           # =============================================
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
             hour_utc=$(date -u +%H)
-            if [[ "$hour_utc" == "22" ]]; then
+            if [[ "$hour_utc" == "13" ]]; then
               echo "🚀 执行大盘复盘（北京时间06:00）"
               python main.py --market-review $FORCE_RUN_ARG
-            elif [[ "$hour_utc" == "10" ]]; then
+            elif [[ "$hour_utc" == "15" ]]; then
               echo "🚀 执行自选股分析（北京时间18:00）"
               python main.py --no-market-review $FORCE_RUN_ARG
             fi
