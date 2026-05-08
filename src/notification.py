@@ -1107,7 +1107,7 @@ class NotificationService(
             f"## 🎯 {report_date} {labels['dashboard_title']}",
             "",
             f"> {len(results)} {labels['stock_unit']} | "
-            f"🟢{labels['buy_label']}:{buy_count} 🟡{labels['watch_label']}:{hold_count} 🔴{labels['sell_label']}:{sell_count}",
+            f"🔴{labels['buy_label']}:{buy_count} 🟡{labels['watch_label']}:{hold_count} 🟢{labels['sell_label']}:{sell_count}",
             "",
         ]
         
@@ -1258,7 +1258,7 @@ class NotificationService(
             f"## 📅 {report_date} {labels['report_title']}",
             "",
             f"> {labels['analyzed_prefix']} **{len(results)}** {labels['stock_unit_compact']} | "
-            f"🟢{labels['buy_label']}:{buy_count} 🟡{labels['watch_label']}:{hold_count} 🔴{labels['sell_label']}:{sell_count} | "
+            f"🔴{labels['buy_label']}:{buy_count} 🟡{labels['watch_label']}:{hold_count} 🟢{labels['sell_label']}:{sell_count} | "
             f"{labels['avg_score_label']}:{avg_score:.0f}",
             "",
         ]
