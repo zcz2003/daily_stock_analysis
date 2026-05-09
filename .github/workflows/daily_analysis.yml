@@ -354,10 +354,10 @@ jobs:
           # =============================================
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
             hour_utc=$(date -u +%H)
-            if [[ "$hour_utc" == "22" ]]; then
+            if [[ "$hour_utc" == "22" || "$hour_utc" == "23" ]]; then
               echo "🚀 执行大盘复盘（北京时间06:00）"
               python main.py --market-review $FORCE_RUN_ARG
-            elif [[ "$hour_utc" == "10" ]]; then
+            elif [[ "$hour_utc" == "10" || "$hour_utc" == "11" ]]; then
               echo "🚀 执行自选股分析（北京时间18:00）"
               python main.py --no-market-review $FORCE_RUN_ARG
             fi
